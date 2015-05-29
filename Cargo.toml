@@ -2,9 +2,10 @@
 resolver = "2"
 members = ["projects/*"]
 default-members = [
-    "projects/sub_projects",
+    "projects/skadi-backend",
 ]
 exclude = [
+    "projects/skadi-frontend",
     "projects/.DS_Store",
 ]
 
