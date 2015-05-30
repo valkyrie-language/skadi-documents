@@ -1,7 +1,7 @@
 use super::*;
 
-impl From<ExampleErrorKind> for ExampleError {
-    fn from(value: ExampleErrorKind) -> Self {
+impl From<SkadiErrorKind> for SkadiError {
+    fn from(value: SkadiErrorKind) -> Self {
         Self {
             kind: Box::new(value),
         }
