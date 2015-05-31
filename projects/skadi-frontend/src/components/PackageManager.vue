@@ -7,6 +7,12 @@
     <!-- 顶部导航栏 -->
     <header class="header">
       <div class="container">
+        <nav class="home-navigation">
+          <a href="#" class="nav-link active">首页</a>
+          <a href="#" class="nav-link">浏览包</a>
+          <a href="#" class="nav-link">文档</a>
+          <a href="#" class="nav-link">关于</a>
+        </nav>
         <div class="search-bar">
           <input type="text" placeholder="搜索包..." class="search-input" />
           <button class="search-button">搜索</button>
@@ -47,6 +53,9 @@
                 <p class="description">这是一个示例包的简要描述，展示包的主要功能和用途。</p>
               </div>
             </div>
+            <div class="view-more">
+              <button class="view-more-button">查看更多</button>
+            </div>
           </section>
 
           <!-- 最近更新 -->
@@ -59,6 +68,9 @@
                 <p class="description">最近更新的包描述，展示包的更新内容和改进。</p>
               </div>
             </div>
+            <div class="view-more">
+              <button class="view-more-button">查看更多</button>
+            </div>
           </section>
 
           <!-- 新发布 -->
@@ -70,6 +82,9 @@
                 <p class="version">v0.1.0</p>
                 <p class="description">新发布的包描述，展示包的特点和创新之处。</p>
               </div>
+            </div>
+            <div class="view-more">
+              <button class="view-more-button">查看更多</button>
             </div>
           </section>
         </div>
@@ -99,6 +114,27 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 2rem;
+  }
+}
+
+.home-navigation {
+  display: flex;
+  gap: 1.5rem;
+
+  .nav-link {
+    color: #495057;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+
+    &:hover,
+    &.active {
+      color: #4dabf7;
+      border-bottom-color: #4dabf7;
+    }
   }
 }
 
@@ -106,7 +142,7 @@
   display: flex;
   gap: 0.5rem;
   flex: 1;
-  max-width: 600px;
+  max-width: 400px;
 
   .search-input {
     flex: 1;
@@ -203,6 +239,7 @@
 
 .packages-grid {
   display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 }
 
@@ -214,7 +251,6 @@
 
   .package-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1rem;
   }
 
@@ -244,6 +280,26 @@
       color: #495057;
       margin: 0;
       line-height: 1.5;
+    }
+  }
+
+  .view-more {
+    margin-top: 1.5rem;
+    text-align: center;
+
+    .view-more-button {
+      padding: 0.5rem 1rem;
+      background-color: transparent;
+      border: 2px solid #4dabf7;
+      color: #4dabf7;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: #4dabf7;
+        color: white;
+      }
     }
   }
 }
