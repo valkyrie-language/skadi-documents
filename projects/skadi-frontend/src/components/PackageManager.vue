@@ -1,5 +1,63 @@
 <script setup lang="ts">
+import { useFluentVue } from 'fluent-vue'
+import SearchBox from './SearchBox.vue'
+import PackageList from './PackageList.vue'
 
+const { t } = useFluentVue()
+
+const featuredPackages = [
+  {
+    name: '@img/png',
+    version: '1.0.0',
+    description: '图像处理工具包'
+  },
+  {
+    name: '@paoramen/cheer-reader',
+    version: '2.1.0',
+    description: '高性能文本解析器'
+  },
+  {
+    name: '@valibot/valibot',
+    version: '0.1.0',
+    description: '轻量级验证库'
+  }
+]
+
+const recentlyUpdatedPackages = [
+  {
+    name: '@goatdb/goatdb',
+    version: '0.2.0',
+    description: '现代化数据库解决方案'
+  },
+  {
+    name: '@planigale/sse',
+    version: '0.2.6',
+    description: 'Server-Sent Events 客户端'
+  },
+  {
+    name: '@omedia/mcp-server',
+    version: '1.0.0-alpha',
+    description: '媒体内容处理服务器'
+  }
+]
+
+const newPackages = [
+  {
+    name: '@omedia/mcp-server-drupal',
+    version: '0.1.0',
+    description: 'Drupal媒体处理插件'
+  },
+  {
+    name: '@reliverse/relidler-sdk',
+    version: '0.1.0',
+    description: '空闲时间任务调度SDK'
+  },
+  {
+    name: '@jipaix/test',
+    version: '0.1.0',
+    description: '测试工具集'
+  }
+]
 </script>
 
 <template>
@@ -8,17 +66,14 @@
     <header class="header">
       <div class="container">
         <nav class="home-navigation">
-          <a href="#" class="nav-link active">首页</a>
-          <a href="#" class="nav-link">浏览包</a>
-          <a href="#" class="nav-link">文档</a>
-          <a href="#" class="nav-link">关于</a>
+          <a href="#" class="nav-link active">{{ t('home') }}</a>
+          <a href="#" class="nav-link">{{ t('browse-packages') }}</a>
+          <a href="#" class="nav-link">{{ t('docs') }}</a>
+          <a href="#" class="nav-link">{{ t('about') }}</a>
         </nav>
-        <div class="search-bar">
-          <input type="text" placeholder="搜索包..." class="search-input" />
-          <button class="search-button">搜索</button>
-        </div>
+        <SearchBox />
         <div class="auth-buttons">
-          <button class="login-button">登录</button>
+          <button class="login-button">{{ t('login') }}</button>
         </div>
       </div>
     </header>
@@ -31,62 +86,30 @@
           <div class="stats-container">
             <div class="stat-item">
               <h3>1,234,567</h3>
-              <p>总下载量</p>
+              <p>{{ t('total-downloads') }}</p>
             </div>
             <div class="stat-item">
               <h3>8,901</h3>
-              <p>包总数</p>
+              <p>{{ t('total-packages') }}</p>
             </div>
           </div>
-          <button class="publish-button">发布包</button>
+          <button class="publish-button">{{ t('publish-package') }}</button>
         </section>
 
         <!-- 包列表区域 -->
         <div class="packages-grid">
-          <!-- 精选包 -->
-          <section class="package-section">
-            <h2>精选包</h2>
-            <div class="package-cards">
-              <div class="package-card" v-for="i in 3" :key="i">
-                <h3>示例包名称</h3>
-                <p class="version">v1.0.0</p>
-                <p class="description">这是一个示例包的简要描述，展示包的主要功能和用途。</p>
-              </div>
-            </div>
-            <div class="view-more">
-              <button class="view-more-button">查看更多</button>
-            </div>
-          </section>
-
-          <!-- 最近更新 -->
-          <section class="package-section">
-            <h2>最近更新</h2>
-            <div class="package-cards">
-              <div class="package-card" v-for="i in 3" :key="i">
-                <h3>更新包名称</h3>
-                <p class="version">v2.1.0</p>
-                <p class="description">最近更新的包描述，展示包的更新内容和改进。</p>
-              </div>
-            </div>
-            <div class="view-more">
-              <button class="view-more-button">查看更多</button>
-            </div>
-          </section>
-
-          <!-- 新发布 -->
-          <section class="package-section">
-            <h2>新发布</h2>
-            <div class="package-cards">
-              <div class="package-card" v-for="i in 3" :key="i">
-                <h3>新包名称</h3>
-                <p class="version">v0.1.0</p>
-                <p class="description">新发布的包描述，展示包的特点和创新之处。</p>
-              </div>
-            </div>
-            <div class="view-more">
-              <button class="view-more-button">查看更多</button>
-            </div>
-          </section>
+          <PackageList
+            title="featured"
+            :packages="featuredPackages"
+          />
+          <PackageList
+            title="recently-updated"
+            :packages="recentlyUpdatedPackages"
+          />
+          <PackageList
+            title="new-to-jsr"
+            :packages="newPackages"
+          />
         </div>
       </div>
     </main>
