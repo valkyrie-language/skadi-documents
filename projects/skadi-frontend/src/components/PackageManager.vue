@@ -1,9 +1,65 @@
+<template>
+  <div class="package-manager">
+    <!-- 顶部导航栏 -->
+    <header class="header">
+      <div class="container">
+        <nav class="home-navigation">
+          <a href="#" class="nav-link active">{{ $t('home') }}</a>
+          <a href="#" class="nav-link">{{ $t('browse-packages') }}</a>
+          <a href="#" class="nav-link">{{ $t('docs') }}</a>
+          <a href="#" class="nav-link">{{ $t('about') }}</a>
+        </nav>
+        <SearchBox />
+        <div class="auth-buttons">
+          <button class="login-button">{{ $t('login') }}</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="main">
+      <div class="container">
+        <!-- 统计信息和发布按钮 -->
+        <section class="stats-section">
+          <div class="stats-container">
+            <div class="stat-item">
+              <h3>1,234,567</h3>
+              <p>{{ $t('total-downloads') }}</p>
+            </div>
+            <div class="stat-item">
+              <h3>8,901</h3>
+              <p>{{ $t('total-packages') }}</p>
+            </div>
+          </div>
+          <button class="publish-button">{{ $t('publish-package') }}</button>
+        </section>
+
+        <!-- 包列表区域 -->
+        <div class="packages-grid">
+          <PackageList
+            title="featured"
+            :packages="featuredPackages"
+          />
+          <PackageList
+            title="recently-updated"
+            :packages="recentlyUpdatedPackages"
+          />
+          <PackageList
+            title="new-to-jsr"
+            :packages="newPackages"
+          />
+        </div>
+      </div>
+    </main>
+  </div>
+</template>
+
 <script setup lang="ts">
-import { useFluentVue } from 'fluent-vue'
+import { useFluent } from 'fluent-vue'
 import SearchBox from './SearchBox.vue'
 import PackageList from './PackageList.vue'
 
-const { t } = useFluentVue()
+const { $t } = useFluent()
 
 const featuredPackages = [
   {
@@ -60,61 +116,7 @@ const newPackages = [
 ]
 </script>
 
-<template>
-  <div class="package-manager">
-    <!-- 顶部导航栏 -->
-    <header class="header">
-      <div class="container">
-        <nav class="home-navigation">
-          <a href="#" class="nav-link active">{{ t('home') }}</a>
-          <a href="#" class="nav-link">{{ t('browse-packages') }}</a>
-          <a href="#" class="nav-link">{{ t('docs') }}</a>
-          <a href="#" class="nav-link">{{ t('about') }}</a>
-        </nav>
-        <SearchBox />
-        <div class="auth-buttons">
-          <button class="login-button">{{ t('login') }}</button>
-        </div>
-      </div>
-    </header>
 
-    <!-- 主要内容区域 -->
-    <main class="main">
-      <div class="container">
-        <!-- 统计信息和发布按钮 -->
-        <section class="stats-section">
-          <div class="stats-container">
-            <div class="stat-item">
-              <h3>1,234,567</h3>
-              <p>{{ t('total-downloads') }}</p>
-            </div>
-            <div class="stat-item">
-              <h3>8,901</h3>
-              <p>{{ t('total-packages') }}</p>
-            </div>
-          </div>
-          <button class="publish-button">{{ t('publish-package') }}</button>
-        </section>
-
-        <!-- 包列表区域 -->
-        <div class="packages-grid">
-          <PackageList
-            title="featured"
-            :packages="featuredPackages"
-          />
-          <PackageList
-            title="recently-updated"
-            :packages="recentlyUpdatedPackages"
-          />
-          <PackageList
-            title="new-to-jsr"
-            :packages="newPackages"
-          />
-        </div>
-      </div>
-    </main>
-  </div>
-</template>
 
 <style lang="scss" scoped>
 .package-manager {
