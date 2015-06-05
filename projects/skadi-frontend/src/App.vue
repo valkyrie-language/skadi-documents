@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import PackageManager from '@/components/PackageManager.vue'
+import PackageManager from './view/PackageManager.vue'
 </script>
 
 <template>
