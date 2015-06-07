@@ -1,10 +1,12 @@
+<template>
+  <home-page />
+</template>
+
 <script lang="ts" setup>
-import PackageManager from './view/PackageManager.vue'
+import HomePage from './view/HomePage.vue'
 </script>
 
-<template>
-  <PackageManager />
-</template>
+
 
 <style scoped>
 .logo {
