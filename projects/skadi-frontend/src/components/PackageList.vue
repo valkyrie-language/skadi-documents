@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useFluent } from 'fluent-vue'
+import {useFluent} from 'fluent-vue'
 
 defineProps<{
   title: string
@@ -10,7 +10,7 @@ defineProps<{
   }>
 }>()
 
-const { $t } = useFluent()
+const {$t} = useFluent()
 </script>
 
 <template>

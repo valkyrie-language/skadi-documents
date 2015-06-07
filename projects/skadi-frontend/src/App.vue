@@ -1,12 +1,9 @@
 <template>
-  <home-page />
+  <router-view />
 </template>
 
 <script lang="ts" setup>
-import HomePage from './view/HomePage.vue'
 </script>
-
-
 
 <style scoped>
 .logo {
