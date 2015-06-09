@@ -4,11 +4,11 @@
 #![doc(html_logo_url = "https://raw.githubusercontent.com/oovm/shape-rs/dev/projects/images/Trapezohedron.svg")]
 #![doc(html_favicon_url = "https://raw.githubusercontent.com/oovm/shape-rs/dev/projects/images/Trapezohedron.svg")]
 
-mod api_sts;
+mod api_statistics;
 mod configs;
 mod errors;
 
-pub use crate::errors::{Result, SkadiError, SkadiErrorKind};
+pub use crate::errors::{Result, SkadiError};
 // Replace some of the `axum::` types with `aide::axum::` ones.
 use aide::{
     axum::{
@@ -22,6 +22,7 @@ use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use sqlx::{Pool, Postgres};
 
+#[derive(Debug)]
 pub struct SkadiService {
     pg: Pool<Postgres>,
 }
@@ -31,7 +32,7 @@ impl SkadiService {
         let app = ApiRouter::new()
             // Change `route` to `api_route` for the route
             // we'd like to expose in the documentation.
-            .api_route("/home/statistics", post(api_sts::home_statistics))
+            .api_route("/home/statistics", post(api_statistics::home_statistics))
             // We'll serve our generated document here.
             .route("/api.json", get(serve_api));
 

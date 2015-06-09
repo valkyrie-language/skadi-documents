@@ -13,7 +13,7 @@ impl SkadiService {
     pub async fn load(toml: &Path) -> Result<Self, SkadiError> {
         let s = match std::fs::read_to_string(toml) {
             Ok(o) => o,
-            Err(_) => Err(SkadiError::from())?,
+            Err(e) => Err(SkadiError::IoError { message: e.to_string(), path: toml.to_string_lossy().to_string() })?,
         };
         let config = toml::from_str::<SkadiConfig>(&s)?;
         config.instantiation().await
