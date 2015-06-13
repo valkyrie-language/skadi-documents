@@ -6,6 +6,8 @@ import PackageHeader from '../components/PackageHeader.vue'
 import InstallCommand from '../components/InstallCommand.vue'
 import TabNavigation from '../components/TabNavigation.vue'
 import PackageContent from '../components/PackageContent.vue'
+import TopNavigation from '../components/TopNavigation.vue'
+import SideNavigation from '../components/SideNavigation.vue'
 
 const {$t} = useFluent()
 const route = useRoute()
@@ -55,11 +57,15 @@ const activeTab = ref('overview')
 
 <template>
   <div class="library-page">
+    <TopNavigation />
     <div class="container">
+      <div class="main-content">
       <PackageHeader :package-info="packageInfo" />
       <InstallCommand :package-name="packageInfo.name" />
       <TabNavigation :tabs="tabs" v-model:active-tab="activeTab" />
       <PackageContent :active-tab="activeTab" :package-info="packageInfo" />
+      </div>
+      <SideNavigation />
     </div>
   </div>
 </template>
@@ -68,12 +74,18 @@ const activeTab = ref('overview')
 .library-page {
   min-height: 100vh;
   background-color: #f8f9fa;
-  padding: 2rem 0;
+  padding-top: calc(64px + 2rem);
 
   .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
-  }
+    display: flex;
+    position: relative;
+
+    .main-content {
+      flex: 1;
+      margin-right: 280px;
+    }
 }
 </style>
