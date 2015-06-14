@@ -15,6 +15,6 @@ impl From<toml::de::Error> for SkadiError {
 
 impl From<sqlx::Error> for SkadiError {
     fn from(error: sqlx::Error) -> Self {
-        SkadiError::UnknownError.into()
+        SkadiError::DatabaseError { message: error.to_string() }
     }
 }
