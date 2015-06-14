@@ -87,5 +87,6 @@ const activeTab = ref('overview')
       flex: 1;
       margin-right: 280px;
     }
+  }
 }
 </style>

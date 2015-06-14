@@ -1,8 +1,9 @@
 use crate::SkadiError;
 use aide::{axum::IntoApiResponse, openapi::StatusCode};
-use axum::{response::IntoResponse, Json};
+use axum::Json;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
+
 
 // We'll need to derive `JsonSchema` for
 // all types that appear in the api documentation.
