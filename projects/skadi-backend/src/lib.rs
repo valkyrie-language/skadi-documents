@@ -12,7 +12,7 @@ pub use crate::errors::{Result, SkadiError};
 // Replace some of the `axum::` types with `aide::axum::` ones.
 use aide::{
     axum::{
-        routing::{get, post}, ApiRouter,
+        routing::get, ApiRouter,
         IntoApiResponse,
     },
     openapi::{Info, OpenApi},
@@ -32,9 +32,9 @@ impl SkadiService {
         let app = ApiRouter::new()
             // Change `route` to `api_route` for the route
             // we'd like to expose in the documentation.
-            .api_route("/home/statistics", post(api_statistics::home_statistics))
+            .api_route("/home/statistics", get(api_statistics::home_statistics))
             // We'll serve our generated document here.
-            .route("/api.json", get(serve_api));
+            .route("/api.json", get(open_api));
 
         let mut api =
             OpenApi { info: Info { description: Some("an example API".to_string()), ..Info::default() }, ..OpenApi::default() };
@@ -54,10 +54,7 @@ impl SkadiService {
         Ok(())
     }
 }
-
-// Note that this clones the document on each request.
-// To be more efficient, we could wrap it into an Arc,
-// or even store it as a serialized string.
-pub async fn serve_api(Extension(api): Extension<OpenApi>) -> impl IntoApiResponse {
+/// Export the generated OpenAPI schema.
+pub async fn open_api(Extension(api): Extension<OpenApi>) -> impl IntoApiResponse {
     Json(api)
 }

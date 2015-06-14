@@ -8,9 +8,11 @@ use serde::{Deserialize, Serialize};
 // all types that appear in the api documentation.
 #[derive(Serialize, JsonSchema)]
 pub struct HomeStatistics {
-    name: String,
+    all_users: u64,
+    all_packages: u64,
+    all_downloads: u64,
 }
 
 pub async fn home_statistics() -> impl IntoApiResponse {
-    Json(HomeStatistics { name: "".to_string() })
+    Json(HomeStatistics { all_users: 1, all_packages: 2, all_downloads: 3 })
 }

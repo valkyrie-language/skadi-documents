@@ -14,7 +14,7 @@ const navigateHome = () => {
     <div class="nav-content">
       <div class="left-section">
         <div class="logo" @click="navigateHome">
-          <img src="/jsr-logo.svg" alt="JSR Logo" class="jsr-logo">
+          <img src="/logo.svg" alt="Logo" class="logo">
         </div>
         <SearchBox class="search-box" />
       </div>
@@ -57,11 +57,8 @@ const navigateHome = () => {
 
     .logo {
       cursor: pointer;
-      
-      .jsr-logo {
-        height: 32px;
-        width: auto;
-      }
+      height: 32px;
+      width: auto;
     }
 
     .search-box {
