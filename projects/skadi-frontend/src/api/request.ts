@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // 创建axios实例
 const request: AxiosInstance = axios.create({
-    baseURL: '/api',
+    baseURL: 'http://localhost:8080',
     timeout: 5000,
     headers: {
         'Content-Type': 'application/json'

@@ -27,6 +27,8 @@ export * from './oauth2-flows-one-of3-authorization-code';
 export * from './oauth2-flows-one-of-implicit';
 export * from './open-api';
 export * from './operation';
+export * from './package-info';
+export * from './package-query-by-name';
 export * from './parameter';
 export * from './parameter-one-of';
 export * from './parameter-one-of1';

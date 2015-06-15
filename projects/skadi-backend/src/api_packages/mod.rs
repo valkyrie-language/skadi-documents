@@ -24,10 +24,10 @@ pub struct PackageInfo {
     last_update: DateTime<Local>,
 }
 
-pub async fn find_package(query: PackageQueryByName) -> impl IntoApiResponse {
+pub async fn find_package(query: Json<PackageQueryByName>) -> impl IntoApiResponse {
     Json(PackageInfo {
-        organization: query.organization,
-        name: query.name,
+        organization: query.0.organization,
+        name: query.0.name,
         version: "0.1.0".to_string(),
         description: "description".to_string(),
         author: "author".to_string(),
