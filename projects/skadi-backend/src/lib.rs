@@ -13,12 +13,13 @@ pub use crate::errors::{Result, SkadiError};
 // Replace some of the `axum::` types with `aide::axum::` ones.
 use aide::{
     axum::{
-        routing::{get, post}, ApiRouter,
-        IntoApiResponse,
+        ApiRouter, IntoApiResponse,
+        routing::{get, post},
     },
     openapi::{Info, OpenApi},
 };
 use axum::{Extension, Json};
+use tower_http::cors::CorsLayer;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use sqlx::{Pool, Postgres};
@@ -38,14 +39,13 @@ impl SkadiService {
         let mut api =
             OpenApi { info: Info { description: Some("an example API".to_string()), ..Info::default() }, ..OpenApi::default() };
 
-        let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
+        let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await?;
 
         axum::serve(
             listener,
-            app
-                // Generate the documentation.
+            app //
                 .finish_api(&mut api)
-                // Expose the documentation to the handlers.
+                .layer(CorsLayer::permissive())
                 .layer(Extension(api))
                 .into_make_service(),
         )
