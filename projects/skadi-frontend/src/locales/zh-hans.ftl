@@ -19,3 +19,17 @@ publish-package = 发布包
 version = v{ $version }
 package-description = { $description }
 view-more = 查看更多
+
+# 包页面
+loading = 加载中...
+package-version = 版本
+package-author = 作者
+package-license = 许可证
+package-repository = 代码仓库
+package-downloads = 下载量
+package-last-update = 最后更新
+package-overview = 概览
+package-docs = 文档
+package-files = 文件
+package-dependencies = 依赖
+package-dependents = 被依赖

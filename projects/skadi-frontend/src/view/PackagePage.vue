@@ -1,46 +1,43 @@
 <template>
-  <div class="library-page">
-    <div class="library-container">
-      <div class="library-header">
-        <h1>{{ organization }} / {{ name }}</h1>
-      </div>
-      <div class="library-content" v-if="packageInfo">
-        <div class="info-section">
-          <div class="info-item">
-            <strong>Version:</strong> {{ packageInfo.version }}
-          </div>
-          <div class="info-item">
-            <strong>Description:</strong> {{ packageInfo.description }}
-          </div>
-          <div class="info-item">
-            <strong>Author:</strong> {{ packageInfo.author }}
-          </div>
-          <div class="info-item">
-            <strong>License:</strong> {{ packageInfo.license }}
-          </div>
-          <div class="info-item">
-            <strong>Repository:</strong>
-            <a :href="packageInfo.repository" target="_blank">{{ packageInfo.repository }}</a>
-          </div>
-          <div class="info-item">
-            <strong>Downloads:</strong> {{ packageInfo.downloads }}
-          </div>
-          <div class="info-item">
-            <strong>Last Update:</strong> {{ formatDate(packageInfo.last_update) }}
-          </div>
-        </div>
-      </div>
-      <div class="loading" v-else-if="loading">Loading...</div>
+  <div class="package-page">
+    <div class="package-container">
+      <PackageHeader
+        v-if="packageInfo"
+        :packageInfo="{
+          name: `${organization}/${name}`,
+          version: packageInfo.version,
+          description: packageInfo.description,
+          author: packageInfo.author,
+          license: packageInfo.license,
+          repository: packageInfo.repository,
+          downloads: packageInfo.downloads,
+          lastUpdate: formatDate(packageInfo.last_update)
+        }"
+      />
+      <PackageContent
+        v-if="packageInfo"
+        activeTab="overview"
+        :packageInfo="{
+          name: `${organization}/${name}`,
+          description: packageInfo.description
+        }"
+      />
+      <div class="loading" v-else-if="loading">{{ $t('loading') }}</div>
       <div class="error" v-else-if="error">{{ error }}</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from 'vue'
-import {useRoute} from 'vue-router'
-import {packageQueryByName} from '../api/api-package'
-import type {PackageInfo} from '../api/models'
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { useFluent } from 'fluent-vue'
+import { packageQueryByName } from '../api/api-package'
+import type { PackageInfo } from '../api/models'
+import PackageHeader from '../components/PackageHeader.vue'
+import PackageContent from '../components/PackageContent.vue'
+
+const { $t } = useFluent()
 
 const route = useRoute()
 const organization = ref(route.params.organization as string)
@@ -83,10 +80,10 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.library-page {
+.package-page {
   padding: 2rem;
 
-  .library-container {
+  .package-container {
     max-width: 1200px;
     margin: 0 auto;
     background: #fff;
