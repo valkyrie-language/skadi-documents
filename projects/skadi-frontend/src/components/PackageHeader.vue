@@ -1,20 +1,12 @@
 <script setup lang="ts">
-import { useFluent } from 'fluent-vue'
+import {useFluent} from 'fluent-vue'
+import type {PackageInfo} from "@/api/models";
 
 defineProps<{
-  packageInfo: {
-    name: string
-    version: string
-    description: string
-    author: string
-    license: string
-    repository: string
-    downloads: string
-    lastUpdate: string
-  }
+  packageInfo: PackageInfo
 }>()
 
-const { $t } = useFluent()
+const {$t} = useFluent()
 </script>
 
 <template>

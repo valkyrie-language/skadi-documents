@@ -1,26 +1,14 @@
 <template>
   <div class="package-page">
     <div class="package-container">
-      <PackageHeader
+      <package-header
         v-if="packageInfo"
-        :packageInfo="{
-          name: `${organization}/${name}`,
-          version: packageInfo.version,
-          description: packageInfo.description,
-          author: packageInfo.author,
-          license: packageInfo.license,
-          repository: packageInfo.repository,
-          downloads: packageInfo.downloads,
-          lastUpdate: formatDate(packageInfo.last_update)
-        }"
+        :packageInfo="packageInfo"
       />
-      <PackageContent
+      <package-content
         v-if="packageInfo"
         activeTab="overview"
-        :packageInfo="{
-          name: `${organization}/${name}`,
-          description: packageInfo.description
-        }"
+        :packageInfo="packageInfo"
       />
       <div class="loading" v-else-if="loading">{{ $t('loading') }}</div>
       <div class="error" v-else-if="error">{{ error }}</div>
@@ -29,15 +17,15 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
-import { useFluent } from 'fluent-vue'
-import { packageQueryByName } from '../api/api-package'
-import type { PackageInfo } from '../api/models'
+import {onMounted, ref} from 'vue'
+import {useRoute} from 'vue-router'
+import {useFluent} from 'fluent-vue'
+import {packageQueryByName} from '../api/api-package'
+import type {PackageInfo} from '../api/models'
 import PackageHeader from '../components/PackageHeader.vue'
 import PackageContent from '../components/PackageContent.vue'
 
-const { $t } = useFluent()
+const {$t} = useFluent()
 
 const route = useRoute()
 const organization = ref(route.params.organization as string)
