@@ -1,4 +1,5 @@
 <template>
+  <home-navigation/>
   <div class="package-manager">
     <div class="container">
       <!-- Logo和标题区域 -->
@@ -18,9 +19,9 @@
 
       <!-- 包列表区域 -->
       <div class="package-lists">
-        <PackageList title="featured" :packages="featuredPackages"/>
-        <PackageList title="recently-updated" :packages="recentlyUpdatedPackages"/>
-        <PackageList title="new-to-jsr" :packages="newPackages"/>
+        <PackageRecommend title="featured" :packages="featuredPackages"/>
+        <PackageRecommend title="recently-updated" :packages="recentlyUpdatedPackages"/>
+        <PackageRecommend title="new-to-jsr" :packages="newPackages"/>
       </div>
     </div>
   </div>
@@ -29,7 +30,8 @@
 <script setup lang="ts">
 import {useFluent} from 'fluent-vue'
 import SearchBox from '../components/SearchBox.vue'
-import PackageList from '../components/PackageList.vue'
+import PackageRecommend from '../components/PackageRecommend.vue'
+import HomeNavigation from "@/components/HomeNavigation.vue";
 
 const {$t} = useFluent()
 

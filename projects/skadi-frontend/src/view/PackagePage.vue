@@ -1,4 +1,5 @@
 <template>
+  <top-navigation/>
   <div class="package-page">
     <div class="package-container">
       <package-header
@@ -7,7 +8,7 @@
       />
       <package-content
         v-if="packageInfo"
-        activeTab="overview"
+        v-model:activeTab="activeTab"
         :packageInfo="packageInfo"
       />
       <div class="loading" v-else-if="loading">{{ $t('loading') }}</div>
@@ -24,8 +25,12 @@ import {packageQueryByName} from '../api/api-package'
 import type {PackageInfo} from '../api/models'
 import PackageHeader from '../components/PackageHeader.vue'
 import PackageContent from '../components/PackageContent.vue'
+import TabNavigation from "@/components/TabNavigation.vue";
+import TopNavigation from "@/components/TopNavigation.vue";
 
 const {$t} = useFluent()
+
+const activeTab = ref('overview')
 
 const route = useRoute()
 const organization = ref(route.params.organization as string)

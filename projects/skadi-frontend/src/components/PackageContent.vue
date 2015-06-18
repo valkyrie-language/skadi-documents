@@ -3,7 +3,6 @@
     <header class="package-header">
       <div class="header-top">
         <h1>{{ packageInfo.name }}</h1>
-        <SearchBox class="search-box"/>
       </div>
       <p class="description">{{ packageInfo.description }}</p>
     </header>
@@ -15,32 +14,18 @@
             v-for="tab in tabs"
             :key="tab.id"
             :class="['tab-button', { active: activeTab === tab.id }]"
+            @click="$emit('update:activeTab', tab.id)"
           >
             {{ $t(tab.label) }}
           </button>
         </div>
 
         <div class="content-area">
-          <div v-if="activeTab === 'overview'" class="overview-content">
-            <h2>{{ $t('package-overview') }}</h2>
-            <p>{{ packageInfo.description }}</p>
-          </div>
-          <div v-else-if="activeTab === 'docs'" class="docs-content">
-            <h2>{{ $t('package-docs') }}</h2>
-            <!-- 文档内容 -->
-          </div>
-          <div v-else-if="activeTab === 'files'" class="files-content">
-            <h2>{{ $t('package-files') }}</h2>
-            <!-- 文件列表 -->
-          </div>
-          <div v-else-if="activeTab === 'dependencies'" class="dependencies-content">
-            <h2>{{ $t('package-dependencies') }}</h2>
-            <!-- 依赖列表 -->
-          </div>
-          <div v-else-if="activeTab === 'dependents'" class="dependents-content">
-            <h2>{{ $t('package-dependents') }}</h2>
-            <!-- 被依赖列表 -->
-          </div>
+          <package-overview v-if="activeTab === 'overview'" :packageInfo="packageInfo"/>
+          <package-docs v-else-if="activeTab === 'docs'" :packageInfo="packageInfo"/>
+          <package-files v-else-if="activeTab === 'files'" :packageInfo="packageInfo"/>
+          <package-dependencies v-else-if="activeTab === 'dependencies'" :packageInfo="packageInfo"/>
+          <package-dependents v-else-if="activeTab === 'dependents'" :packageInfo="packageInfo"/>
         </div>
       </div>
 
@@ -68,11 +53,19 @@
 import {useFluent} from 'fluent-vue'
 import {ref} from 'vue'
 import type {PackageInfo} from "@/api/models"
-import SearchBox from './SearchBox.vue';
+import PackageOverview from './PackageOverview.vue'
+import PackageDocs from './PackageDocs.vue'
+import PackageFiles from './PackageFiles.vue'
+import PackageDependencies from './PackageDependencies.vue'
+import PackageDependents from './PackageDependents.vue'
 
 defineProps<{
   activeTab: string
   packageInfo: PackageInfo
+}>()
+
+const emit = defineEmits<{
+  'update:activeTab': [value: string]
 }>()
 
 const {$t} = useFluent()
