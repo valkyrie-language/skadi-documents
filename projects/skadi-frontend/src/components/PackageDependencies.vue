@@ -10,10 +10,10 @@
 
 <script setup lang="ts">
 import { useFluent } from 'fluent-vue'
-import type { PackageInfo } from '@/api/models'
+import type {PackageDetail,} from '@/api/models'
 
 defineProps<{
-  packageInfo: PackageInfo
+  packageInfo: PackageDetail
 }>()
 
 const { $t } = useFluent()

@@ -16,61 +16,79 @@
 /**
  * 
  * @export
- * @interface PackageInfo
+ * @interface PackageDetail
  */
-export interface PackageInfo {
+export interface PackageDetail {
     /**
      * 
      * @type {string}
-     * @memberof PackageInfo
+     * @memberof PackageDetail
      */
     author: string;
     /**
      * 
      * @type {string}
-     * @memberof PackageInfo
+     * @memberof PackageDetail
      */
-    description: string;
+    documentation: string;
     /**
      * 
      * @type {number}
-     * @memberof PackageInfo
+     * @memberof PackageDetail
      */
     downloads: number;
     /**
      * 
      * @type {string}
-     * @memberof PackageInfo
-     */
-    last_update: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PackageInfo
+     * @memberof PackageDetail
      */
     license: string;
     /**
      * 
      * @type {string}
-     * @memberof PackageInfo
+     * @memberof PackageDetail
      */
     name: string;
     /**
      * 
      * @type {string}
-     * @memberof PackageInfo
+     * @memberof PackageDetail
      */
     organization: string;
     /**
      * 
      * @type {string}
-     * @memberof PackageInfo
+     * @memberof PackageDetail
+     */
+    package_id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PackageDetail
      */
     repository: string;
     /**
      * 
      * @type {string}
-     * @memberof PackageInfo
+     * @memberof PackageDetail
+     */
+    summary: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PackageDetail
+     */
+    update_time: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PackageDetail
+     */
+    update_user: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PackageDetail
      */
     version: string;
 }

@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import {useFluent} from 'fluent-vue'
 import {ref} from 'vue'
-import type {PackageInfo} from "@/api/models"
+import type {PackageDetail, } from "@/api/models"
 import PackageOverview from './PackageOverview.vue'
 import PackageVersions from './PackageVersions.vue'
 import PackageSource from './PackageSource.vue'
@@ -54,7 +54,7 @@ import PackageDependents from './PackageDependents.vue'
 
 defineProps<{
   activeTab: string
-  packageInfo: PackageInfo
+  packageInfo: PackageDetail
 }>()
 
 const emit = defineEmits<{

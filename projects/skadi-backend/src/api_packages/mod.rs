@@ -13,12 +13,13 @@ pub struct PackageQueryByName {
 }
 
 #[derive(Serialize, JsonSchema)]
-pub struct PackageInfo {
+pub struct PackageDetail {
     package_id: Uuid,
     organization: String,
     name: String,
     version: String,
     summary: String,
+    documentation: String,
     author: String,
     license: String,
     repository: String,
@@ -28,12 +29,22 @@ pub struct PackageInfo {
 }
 
 pub async fn find_package(query: Json<PackageQueryByName>) -> impl IntoApiResponse {
-    Json(PackageInfo {
+    Json(PackageDetail {
         package_id: Uuid::now_v7(),
         organization: query.0.organization,
         name: query.0.name,
         version: "0.1.0".to_string(),
         summary: "summary".to_string(),
+        documentation: r#"
+
+```ts
+const markdown = "test"
+```
+
+$\frac{1}{2}$ + $$\frac{1}{2}$$
+
+        "#
+        .to_string(),
         author: "author".to_string(),
         license: "license".to_string(),
         repository: "repository".to_string(),
