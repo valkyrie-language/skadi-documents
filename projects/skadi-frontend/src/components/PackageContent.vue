@@ -1,12 +1,5 @@
 <template>
   <div class="package-content">
-    <header class="package-header">
-      <div class="header-top">
-        <h1>{{ packageInfo.name }}</h1>
-      </div>
-      <p class="description">{{ packageInfo.description }}</p>
-    </header>
-
     <div class="main-content">
       <div class="content-wrapper">
         <div class="tabs">
@@ -22,8 +15,8 @@
 
         <div class="content-area">
           <package-overview v-if="activeTab === 'overview'" :packageInfo="packageInfo"/>
-          <package-docs v-else-if="activeTab === 'docs'" :packageInfo="packageInfo"/>
-          <package-files v-else-if="activeTab === 'files'" :packageInfo="packageInfo"/>
+          <package-versions v-else-if="activeTab === 'docs'" :packageInfo="packageInfo"/>
+          <package-source v-else-if="activeTab === 'files'" :packageInfo="packageInfo"/>
           <package-dependencies v-else-if="activeTab === 'dependencies'" :packageInfo="packageInfo"/>
           <package-dependents v-else-if="activeTab === 'dependents'" :packageInfo="packageInfo"/>
         </div>
@@ -54,8 +47,8 @@ import {useFluent} from 'fluent-vue'
 import {ref} from 'vue'
 import type {PackageInfo} from "@/api/models"
 import PackageOverview from './PackageOverview.vue'
-import PackageDocs from './PackageDocs.vue'
-import PackageFiles from './PackageFiles.vue'
+import PackageVersions from './PackageVersions.vue'
+import PackageSource from './PackageSource.vue'
 import PackageDependencies from './PackageDependencies.vue'
 import PackageDependents from './PackageDependents.vue'
 

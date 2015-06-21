@@ -25,7 +25,6 @@ import {packageQueryByName} from '../api/api-package'
 import type {PackageInfo} from '../api/models'
 import PackageHeader from '../components/PackageHeader.vue'
 import PackageContent from '../components/PackageContent.vue'
-import TabNavigation from "@/components/TabNavigation.vue";
 import TopNavigation from "@/components/TopNavigation.vue";
 
 const {$t} = useFluent()
@@ -40,10 +39,6 @@ const loading = ref(true)
 const error = ref('')
 
 const fetchPackageInfo = async () => {
-  console.log('Starting fetchPackageInfo with params:', {
-    organization: organization.value,
-    name: name.value
-  })
   try {
     loading.value = true
     error.value = ''
@@ -51,14 +46,11 @@ const fetchPackageInfo = async () => {
       organization: organization.value,
       name: name.value
     })
-    console.log('fetchPackageInfo response:', response)
     packageInfo.value = response
   } catch (e) {
-    console.error('fetchPackageInfo error:', e)
     error.value = 'Failed to load package information'
   } finally {
     loading.value = false
-    console.log('fetchPackageInfo completed')
   }
 }
 
@@ -67,7 +59,6 @@ const formatDate = (date: string) => {
 }
 
 onMounted(() => {
-  console.log('LibraryPage component mounted')
   fetchPackageInfo()
 })
 </script>

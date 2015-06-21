@@ -1,6 +1,6 @@
 <template>
   <div class="docs-content">
-    <h2>{{ $t('package-docs') }}</h2>
+    <h2>{{ $t('package-versions') }}</h2>
     <!-- 文档内容将在此处展示 -->
     <div class="docs-placeholder">
       <p>{{ $t('docs-coming-soon') }}</p>

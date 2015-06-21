@@ -7,39 +7,43 @@ defineProps<{
 }>()
 
 const {$t} = useFluent()
+
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString()
+}
 </script>
 
 <template>
   <div class="package-header">
-    <h1>{{ packageInfo.name }}</h1>
-    <p class="description">{{ packageInfo.description }}</p>
+    <div class="header-content">
+      <div class="title-section">
+        <h1>{{ packageInfo.name }} <span class="version">v{{ packageInfo.version }}</span></h1>
+      </div>
+      <p class="description">{{ packageInfo.description }}</p>
 
-    <div class="meta-info">
-      <div class="meta-item version">
-        <span class="label">{{ $t('package-version') }}</span>
-        <span class="value">{{ packageInfo.version }}</span>
-      </div>
-      <div class="meta-item author">
-        <span class="label">{{ $t('package-author') }}</span>
-        <span class="value">{{ packageInfo.author }}</span>
-      </div>
-      <div class="meta-item license">
-        <span class="label">{{ $t('package-license') }}</span>
-        <span class="value">{{ packageInfo.license }}</span>
-      </div>
-      <div class="meta-item repository">
-        <span class="label">{{ $t('package-repository') }}</span>
-        <span class="value">
-          <a :href="packageInfo.repository" target="_blank" rel="noopener">{{ packageInfo.repository }}</a>
+      <div class="meta-info">
+        <span class="meta-item">
+          <span class="meta-label">{{ $t('package-author') }}</span>
+          <span class="meta-value">{{ packageInfo.author }}</span>
         </span>
-      </div>
-      <div class="meta-item downloads">
-        <span class="label">{{ $t('package-downloads') }}</span>
-        <span class="value">{{ packageInfo.downloads }}</span>
-      </div>
-      <div class="meta-item last-update">
-        <span class="label">{{ $t('package-last-update') }}</span>
-        <span class="value">{{ packageInfo.lastUpdate }}</span>
+        <span class="meta-item">
+          <span class="meta-label">{{ $t('package-license') }}</span>
+          <span class="meta-value">{{ packageInfo.license }}</span>
+        </span>
+        <span class="meta-item">
+          <span class="meta-label">{{ $t('package-repository') }}</span>
+          <span class="meta-value">
+            <a :href="packageInfo.repository" target="_blank" rel="noopener">{{ packageInfo.repository }}</a>
+          </span>
+        </span>
+        <span class="meta-item">
+          <span class="meta-label">{{ $t('package-downloads') }}</span>
+          <span class="meta-value">{{ packageInfo.downloads }}</span>
+        </span>
+        <span class="meta-item">
+          <span class="meta-label">{{ $t('package-last-update') }}</span>
+          <span class="meta-value">{{ formatDate(packageInfo.last_update) }}</span>
+        </span>
       </div>
     </div>
   </div>
@@ -47,100 +51,71 @@ const {$t} = useFluent()
 
 <style lang="scss" scoped>
 .package-header {
-  padding: 2rem;
-  border-bottom: 1px solid #eee;
+  background-color: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 2rem;
+  padding: 2rem 0;
 
-  h1 {
-    margin: 0;
-    font-size: 2rem;
-    color: #333;
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .title-section {
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      color: #000;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .version {
+        font-size: 1.5rem;
+        color: #6b7280;
+        font-weight: 400;
+      }
+    }
   }
 
   .description {
-    margin: 1rem 0;
-    color: #666;
-    font-size: 1.1rem;
+    margin: 1rem 0 1.5rem;
+    color: #374151;
+    font-size: 1.125rem;
+    line-height: 1.5;
+    max-width: 800px;
   }
 
   .meta-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;
-    margin-top: 2rem;
-
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    
     .meta-item {
       display: flex;
-      flex-direction: column;
-      padding: 1rem;
-      background: #f8f9fa;
-      border-radius: 8px;
-      transition: background-color 0.2s;
-
-      &:hover {
-        background: #f1f3f5;
+      align-items: center;
+      gap: 0.5rem;
+      
+      .meta-label {
+        color: #6b7280;
+        font-size: 0.875rem;
       }
-
-      .label {
-        color: #666;
-        font-size: 0.9rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .value {
-        color: #333;
+      
+      .meta-value {
+        color: #111827;
+        font-size: 0.875rem;
         font-weight: 500;
-
+        
         a {
-          color: #0969da;
+          color: #3b82f6;
           text-decoration: none;
-
+          
           &:hover {
             text-decoration: underline;
           }
         }
-      }
-    }
-  }
-}
-</style>
-
-<style lang="scss" scoped>
-.package-header {
-  background-color: white;
-  border-radius: 8px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-  h1 {
-    font-size: 2rem;
-    color: #212529;
-    margin: 0 0 1rem;
-  }
-
-  .description {
-    font-size: 1.1rem;
-    color: #495057;
-    margin-bottom: 1.5rem;
-  }
-
-  .meta-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-
-    .meta-item {
-      .label {
-        display: block;
-        font-size: 0.875rem;
-        color: #868e96;
-        margin-bottom: 0.25rem;
-      }
-
-      .value {
-        font-size: 1rem;
-        color: #212529;
-        font-weight: 500;
       }
     }
   }
