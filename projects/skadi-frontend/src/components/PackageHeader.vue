@@ -17,7 +17,12 @@ const formatDate = (date: string) => {
   <div class="package-header">
     <div class="header-content">
       <div class="title-section">
-        <h1>{{ packageInfo.name }} <span class="version">v{{ packageInfo.version }}</span></h1>
+        <h1>
+          <a :href="`/org/${packageInfo.org}`" class="org-link">{{ packageInfo.org }}</a>
+          <span class="separator">/</span>
+          <a :href="`/package/${packageInfo.org}/${packageInfo.name}`" class="name-link">{{ packageInfo.name }}</a>
+          <span class="version">v{{ packageInfo.version }}</span>
+        </h1>
       </div>
       <p class="description">{{ packageInfo.description }}</p>
 
@@ -33,7 +38,10 @@ const formatDate = (date: string) => {
         <span class="meta-item">
           <span class="meta-label">{{ $t('package-repository') }}</span>
           <span class="meta-value">
-            <a :href="packageInfo.repository" target="_blank" rel="noopener">{{ packageInfo.repository }}</a>
+            <a :href="packageInfo.repository" target="_blank" rel="noopener" class="repository-link">
+              <span class="repo-icon">📦</span>
+              <span class="repo-text">{{ packageInfo.repository.replace(/^https?:\/\/(www\.)?/, '') }}</span>
+            </a>
           </span>
         </span>
         <span class="meta-item">
@@ -70,7 +78,23 @@ const formatDate = (date: string) => {
       font-weight: 600;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.25rem;
+
+      .org-link,
+      .name-link {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.2s;
+
+        &:hover {
+          color: #4f46e5;
+        }
+      }
+
+      .separator {
+        color: #6b7280;
+        margin: 0 0.25rem;
+      }
 
       .version {
         font-size: 1.5rem;
@@ -92,32 +116,47 @@ const formatDate = (date: string) => {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
-    
+
     .meta-item {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      
+
       .meta-label {
         color: #6b7280;
         font-size: 0.875rem;
       }
-      
+
       .meta-value {
         color: #111827;
         font-size: 0.875rem;
         font-weight: 500;
-        
-        a {
-          color: #3b82f6;
+
+        .repository-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: #4f46e5;
           text-decoration: none;
-          
+          padding: 0.25rem 0.5rem;
+          border-radius: 0.375rem;
+          transition: background-color 0.2s;
+
           &:hover {
-            text-decoration: underline;
+            background-color: #f3f4f6;
+          }
+
+          .repo-icon {
+            font-size: 1rem;
+          }
+
+          .repo-text {
+            font-weight: 500;
           }
         }
       }
     }
   }
 }
+
 </style>

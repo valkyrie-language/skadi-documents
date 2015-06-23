@@ -8,8 +8,12 @@ use uuid::Uuid;
 
 #[derive(Deserialize, JsonSchema)]
 pub struct PackageQueryByName {
+    /// The owner of the package.
     organization: String,
+    /// The name of the package.
     name: String,
+    /// The specific version of the package to query.
+    version: Option<String>,
 }
 
 #[derive(Serialize, JsonSchema)]
@@ -33,9 +37,10 @@ pub async fn find_package(query: Json<PackageQueryByName>) -> impl IntoApiRespon
         package_id: Uuid::now_v7(),
         organization: query.0.organization,
         name: query.0.name,
-        version: "0.1.0".to_string(),
+        version: query.0.version.unwrap_or("0.1.0".to_string()),
         summary: "summary".to_string(),
         documentation: r#"
+## markdown
 
 ```ts
 const markdown = "test"

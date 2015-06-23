@@ -22,22 +22,7 @@
         </div>
       </div>
 
-      <aside class="sidebar">
-        <div class="sidebar-section">
-          <h3>{{ $t('usage') }}</h3>
-          <div class="usage-example">
-            <code>deno add jsr:@img/png</code>
-          </div>
-        </div>
-        <div class="sidebar-section">
-          <h3>{{ $t('symbols') }}</h3>
-          <ul class="symbol-list">
-            <li>decodePNG</li>
-            <li>encodePNG</li>
-            <li>PNGOptions</li>
-          </ul>
-        </div>
-      </aside>
+      <package-sidebar :package-info="packageInfo"/>
     </div>
   </div>
 </template>
@@ -45,12 +30,13 @@
 <script setup lang="ts">
 import {useFluent} from 'fluent-vue'
 import {ref} from 'vue'
-import type {PackageDetail, } from "@/api/models"
+import type {PackageDetail,} from "@/api/models"
 import PackageOverview from './PackageOverview.vue'
 import PackageVersions from './PackageVersions.vue'
 import PackageSource from './PackageSource.vue'
 import PackageDependencies from './PackageDependencies.vue'
 import PackageDependents from './PackageDependents.vue'
+import PackageSidebar from "@/components/PackageSidebar.vue";
 
 defineProps<{
   activeTab: string
@@ -172,53 +158,5 @@ const tabs = ref([
     }
   }
 
-  .sidebar {
-    .sidebar-section {
-      background-color: white;
-      border-radius: 8px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1rem;
-
-      h3 {
-        font-size: 1.2rem;
-        color: #212529;
-        margin: 0 0 1rem;
-      }
-
-      .usage-example {
-        background-color: #f8f9fa;
-        border-radius: 4px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-
-        code {
-          font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-          color: #0969da;
-        }
-      }
-
-      .symbol-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-
-        li {
-          color: #0969da;
-          padding: 0.5rem 0;
-          border-bottom: 1px solid #eee;
-          cursor: pointer;
-
-          &:last-child {
-            border-bottom: none;
-          }
-
-          &:hover {
-            color: #0366d6;
-          }
-        }
-      }
-    }
-  }
 }
 </style>
