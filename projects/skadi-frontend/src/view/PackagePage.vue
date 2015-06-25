@@ -2,17 +2,23 @@
   <top-navigation/>
   <div class="package-page">
     <div class="package-container">
-      <package-header
-        v-if="packageInfo"
-        :packageInfo="packageInfo"
-      />
-      <package-content
-        v-if="packageInfo"
-        v-model:activeTab="activeTab"
-        :packageInfo="packageInfo"
-      />
-      <div class="loading" v-else-if="loading">{{ $t('loading') }}</div>
-      <div class="error" v-else-if="error">{{ error }}</div>
+      <Suspense>
+        <template #default>
+          <div v-if="packageInfo">
+            <package-header
+              :packageInfo="packageInfo"
+            />
+            <package-content
+              v-model:activeTab="activeTab"
+              :packageInfo="packageInfo"
+            />
+          </div>
+          <div class="error" v-else-if="error">{{ error }}</div>
+        </template>
+        <template #fallback>
+          <div class="loading">{{ $t('loading') }}</div>
+        </template>
+      </Suspense>
     </div>
   </div>
 </template>

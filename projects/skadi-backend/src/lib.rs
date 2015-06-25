@@ -13,16 +13,16 @@ pub use crate::errors::{Result, SkadiError};
 // Replace some of the `axum::` types with `aide::axum::` ones.
 use aide::{
     axum::{
-        ApiRouter, IntoApiResponse,
-        routing::{get, post},
+        routing::{get, post}, ApiRouter,
+        IntoApiResponse,
     },
     openapi::{Info, OpenApi},
 };
 use axum::{Extension, Json};
-use tower_http::cors::CorsLayer;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use sqlx::{Pool, Postgres};
+use tower_http::cors::CorsLayer;
 
 #[derive(Debug)]
 pub struct SkadiService {
@@ -34,6 +34,7 @@ impl SkadiService {
         let app = ApiRouter::new()
             .api_route("/home/statistics", get(api_statistics::home_statistics))
             .api_route("/package/find", post(api_packages::find_package))
+            .api_route("/package/versions", post(api_packages::list_package_version))
             .route("/api.json", get(open_api));
 
         let mut api =

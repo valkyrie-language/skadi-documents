@@ -16,6 +16,30 @@ pub struct PackageQueryByName {
     version: Option<String>,
 }
 
+#[derive(Deserialize, JsonSchema)]
+pub struct VersionQueryByName {
+    /// The owner of the package.
+    organization: String,
+    /// The name of the package.
+    name: String,
+    /// The specific version of the package to query.
+    sorter: Option<VersionSorter>,
+}
+
+#[derive(Deserialize, JsonSchema)]
+pub enum VersionSorter {
+    Version,
+    Time,
+    Downloads,
+}
+
+#[derive(Serialize, JsonSchema)]
+pub struct PackageVersion {
+    version: String,
+    update_user: String,
+    update_time: DateTime<Local>,
+}
+
 #[derive(Serialize, JsonSchema)]
 pub struct PackageDetail {
     package_id: Uuid,
@@ -57,4 +81,11 @@ $\frac{1}{2}$ + $$\frac{1}{2}$$
         update_time: DateTime::default(),
         update_user: Uuid::now_v7(),
     })
+}
+
+pub async fn list_package_version(query: Json<PackageQueryByName>) -> impl IntoApiResponse {
+    Json(vec![
+        PackageVersion { version: "1.0".to_string(), update_user: "bb".to_string(), update_time: Default::default() },
+        PackageVersion { version: "2.0".to_string(), update_user: "aa".to_string(), update_time: Default::default() },
+    ])
 }

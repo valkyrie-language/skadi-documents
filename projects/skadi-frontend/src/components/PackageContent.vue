@@ -13,13 +13,11 @@
           </button>
         </div>
 
-        <div class="content-area">
-          <package-overview v-if="activeTab === 'overview'" :packageInfo="packageInfo"/>
-          <package-versions v-else-if="activeTab === 'docs'" :packageInfo="packageInfo"/>
-          <package-source v-else-if="activeTab === 'files'" :packageInfo="packageInfo"/>
-          <package-dependencies v-else-if="activeTab === 'dependencies'" :packageInfo="packageInfo"/>
-          <package-dependents v-else-if="activeTab === 'dependents'" :packageInfo="packageInfo"/>
-        </div>
+        <package-overview v-if="activeTab === 'overview'" :packageInfo="packageInfo"/>
+        <package-versions v-else-if="activeTab === 'docs'" :packageInfo="packageInfo"/>
+        <package-source v-else-if="activeTab === 'files'" :packageInfo="packageInfo"/>
+        <package-dependencies v-else-if="activeTab === 'dependencies'" :packageInfo="packageInfo"/>
+        <package-dependents v-else-if="activeTab === 'dependents'" :packageInfo="packageInfo"/>
       </div>
 
       <package-sidebar :package-info="packageInfo"/>

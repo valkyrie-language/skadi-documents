@@ -1,8 +1,5 @@
 <template>
-  <div class="overview-content">
-    <h2>{{ $t('package-overview') }}</h2>
-    <div class="markdown-content" v-html="renderedContent"></div>
-  </div>
+  <div class="markdown-content" v-html="renderedContent"></div>
 </template>
 
 <script setup lang="ts">
@@ -27,17 +24,16 @@ const highlighter = await createHighlighter({
 })
 
 const initMarkdown = async () => {
-
-
   const md = new MarkdownIt({
     html: true,
-    highlight: (code, lang) => {
+    highlight: (code: string, lang: string) => {
       return highlighter.codeToHtml(code, {
         theme: 'github-light',
         lang: lang,
       })
     }
   })
+
 
   md.use(markdownItKatex, {
     throwOnError: false,
