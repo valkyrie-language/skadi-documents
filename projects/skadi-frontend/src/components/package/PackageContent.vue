@@ -34,7 +34,7 @@ import PackageVersions from './PackageVersions.vue'
 import PackageSource from './PackageSource.vue'
 import PackageDependencies from './PackageDependencies.vue'
 import PackageDependents from './PackageDependents.vue'
-import PackageSidebar from "@/components/PackageSidebar.vue";
+import PackageSidebar from "./PackageSidebar.vue";
 
 defineProps<{
   activeTab: string

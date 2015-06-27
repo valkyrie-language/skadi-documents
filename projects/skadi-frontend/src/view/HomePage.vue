@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import {useFluent} from 'fluent-vue'
 import SearchBox from '../components/SearchBox.vue'
-import PackageRecommend from '../components/PackageRecommend.vue'
+import PackageRecommend from '../components/package/PackageRecommend.vue'
 import HomeNavigation from "@/components/HomeNavigation.vue";
 
 const {$t} = useFluent()

@@ -28,11 +28,9 @@ import {onMounted, ref} from 'vue'
 import {useRoute} from 'vue-router'
 import {useFluent} from 'fluent-vue'
 import {packageQueryByName} from '../api/api-package'
-import type {PackageInfo} from '../api/models'
-import PackageHeader from '../components/PackageHeader.vue'
-import PackageContent from '../components/PackageContent.vue'
+import type {PackageDetail} from '../api/models'
 import TopNavigation from "@/components/TopNavigation.vue";
-
+import {PackageHeader, PackageContent} from "@/components/package"
 const {$t} = useFluent()
 
 const activeTab = ref('overview')
@@ -40,7 +38,7 @@ const activeTab = ref('overview')
 const route = useRoute()
 const organization = ref(route.params.organization as string)
 const name = ref(route.params.package as string)
-const packageInfo = ref<PackageInfo | null>(null)
+const packageInfo = ref<PackageDetail | null>(null)
 const loading = ref(true)
 const error = ref('')
 
