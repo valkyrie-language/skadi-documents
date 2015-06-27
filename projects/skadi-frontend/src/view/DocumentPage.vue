@@ -1,6 +1,7 @@
 <template>
   <top-navigation/>
   <div class="document-page">
+    <document-sidebar class="sidebar" />
     <div class="document-container">
       <Suspense>
         <template #default>
@@ -25,6 +26,7 @@ import {useRoute} from 'vue-router'
 import {useFluent} from 'fluent-vue'
 import TopNavigation from '@/components/TopNavigation.vue'
 import {ClassView, ModuleView, TraitView} from '@/components/document'
+import DocumentSidebar from '@/components/document/DocumentSidebar.vue'
 
 const {$t} = useFluent()
 const route = useRoute()
@@ -35,25 +37,45 @@ const version = ref(route.params.version as string)
 const modulePath = ref(route.params.modulePath as string)
 
 const documentType = ref('module')
-const documentInfo = ref(null)
+const documentInfo = ref({
+  name: 'std::collections',
+  version: '1.0.0',
+  description: 'Collection types provided by the standard library.',
+  items: [
+    {
+      type: 'Module',
+      name: 'hash_map',
+      description: 'A hash map implemented with linear probing and Robin Hood bucket stealing.'
+    },
+    {
+      type: 'Module',
+      name: 'vec_deque',
+      description: 'A double-ended queue implemented with a growable ring buffer.'
+    },
+    {
+      type: 'Struct',
+      name: 'BTreeMap',
+      description: 'A map based on a B-Tree.'
+    },
+    {
+      type: 'Trait',
+      name: 'FromIterator',
+      description: 'Conversion from an Iterator.'
+    }
+  ]
+})
 const error = ref('')
 
-const moduleName = ref('')
+const moduleName = ref(modulePath.value)
 const className = ref('')
 const traitName = ref('')
 
 const fetchDocumentInfo = async () => {
   try {
     error.value = ''
-    // TODO: Implement API call to fetch document info
-    // const response = await fetchDocInfo({
-    //   organization: organization.value,
-    //   library: library.value,
-    //   version: version.value,
-    //   modulePath: modulePath.value
-    // })
-    // documentInfo.value = response
-    // documentType.value = response.type
+    // 在实际项目中，这里会调用 API 获取文档信息
+    // 目前使用模拟数据
+    documentInfo.value = documentInfo.value
   } catch (e) {
     error.value = 'Failed to load documentation'
   }
@@ -66,14 +88,20 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .document-page {
-  padding: 2rem;
-
+  display: flex;
+  height: calc(100vh - 60px);
+  
+  .sidebar {
+    flex-shrink: 0;
+  }
+  
   .document-container {
-    max-width: 1200px;
-    margin: 0 auto;
+    flex: 1;
+    padding: 2rem;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
   }
 
   .loading {

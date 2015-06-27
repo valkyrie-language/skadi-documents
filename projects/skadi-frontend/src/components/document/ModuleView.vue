@@ -42,10 +42,31 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const moduleName = ref(route.params.module as string)
 const version = ref(route.params.version as string)
-const description = ref('')
-const items = ref([])
+const description = ref('Collection types provided by the standard library.')
+const items = ref([
+  {
+    type: 'Module',
+    name: 'hash_map',
+    description: 'A hash map implemented with linear probing and Robin Hood bucket stealing.'
+  },
+  {
+    type: 'Module',
+    name: 'vec_deque',
+    description: 'A double-ended queue implemented with a growable ring buffer.'
+  },
+  {
+    type: 'Struct',
+    name: 'BTreeMap',
+    description: 'A map based on a B-Tree.'
+  },
+  {
+    type: 'Trait',
+    name: 'FromIterator',
+    description: 'Conversion from an Iterator.'
+  }
+])
 
-// TODO: Fetch module documentation data
+// 在实际项目中，这里会调用 API 获取模块文档数据
 </script>
 
 <style lang="scss" scoped>
