@@ -79,12 +79,7 @@ const items = ref([
     summary: 'Conversion from an Iterator.'
   }
 ])
-const TYPE_ORDER = {
-  'Module': 1,
-  'Class': 2,
-  'Trait': 3,
-  'Constant': 4
-}
+const TYPE_ORDER = ['Module', 'Class', 'Trait', 'Constant']
 
 const groupedItems = computed(() => {
   const groups = {}
@@ -98,7 +93,7 @@ const groupedItems = computed(() => {
   // 按照定义的顺序对类型进行排序
   return Object.fromEntries(
     Object.entries(groups).sort(([a], [b]) => {
-      return (TYPE_ORDER[a] || 999) - (TYPE_ORDER[b] || 999)
+      return TYPE_ORDER.indexOf(a) - TYPE_ORDER.indexOf(b)
     })
   )
 })

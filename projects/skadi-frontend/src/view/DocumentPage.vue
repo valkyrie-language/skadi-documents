@@ -27,6 +27,7 @@ import {useFluent} from 'fluent-vue'
 import TopNavigation from '@/components/TopNavigation.vue'
 import {ClassView, ModuleView, TraitView} from '@/components/document'
 import DocumentSidebar from '@/components/document/DocumentSidebar.vue'
+import {documentQueryByPath} from "@/api/api-document.ts";
 
 const {$t} = useFluent()
 const route = useRoute()

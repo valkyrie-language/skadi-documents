@@ -38,7 +38,7 @@ export interface DocumentInfoOneOf1 {
     * @enum {string}
     */
 export enum DocumentInfoOneOf1TypeEnum {
-    Class = 'Class'
+    Class = 'class'
 }
 
 

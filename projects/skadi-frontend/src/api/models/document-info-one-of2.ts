@@ -38,7 +38,7 @@ export interface DocumentInfoOneOf2 {
     * @enum {string}
     */
 export enum DocumentInfoOneOf2TypeEnum {
-    Trait = 'Trait'
+    Trait = 'trait'
 }
 
 

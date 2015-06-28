@@ -17,20 +17,40 @@ pub struct DocumentQueryByPath {
     /// The path of the document to query.
     path: Vec<String>,
 }
+
 #[derive(Serialize, JsonSchema)]
-#[serde(tag = "type")]
+#[serde(tag = "type", rename_all = "kebab-case")]
 pub enum DocumentInfo {
-    Module { name: String, summary: String, documentation: String, items: Vec<ModuleItem> },
-    Class { name: String },
-    Trait { name: String },
+    Module(ModuleInfo),
+    Class(ClassInfo),
+    Trait(TraitInfo),
 }
 
 #[derive(Serialize, JsonSchema)]
+pub struct ModuleInfo {
+    pub name: String,
+    pub summary: String,
+    pub documentation: String,
+    pub items: Vec<ModuleItem>,
+}
+
+#[derive(Serialize, JsonSchema)]
+#[serde(rename_all = "kebab-case")]
 pub enum ModuleType {
     Module,
     Class,
     Trait,
     Constant,
+}
+
+#[derive(Serialize, JsonSchema)]
+pub struct ClassInfo {
+    pub name: String,
+}
+
+#[derive(Serialize, JsonSchema)]
+pub struct TraitInfo {
+    pub name: String,
 }
 
 #[derive(Serialize, JsonSchema)]
@@ -42,9 +62,9 @@ pub struct ModuleItem {
 
 pub async fn list_document(query: Json<DocumentQueryByPath>) -> impl IntoApiResponse {
     match query.0.path.last() {
-        Some(s) if s.eq("class") => Json(DocumentInfo::Class { name: "测试类".to_string() }),
-        Some(s) if s.eq("trait") => Json(DocumentInfo::Trait { name: "测试特质".to_string() }),
-        _ => Json(DocumentInfo::Module {
+        Some(s) if s.eq("class") => Json(DocumentInfo::Class(ClassInfo { name: "测试类".to_string() })),
+        Some(s) if s.eq("trait") => Json(DocumentInfo::Trait(TraitInfo { name: "测试特质".to_string() })),
+        _ => Json(DocumentInfo::Module(ModuleInfo {
             name: "测试名".to_string(),
             summary: "测试总结".to_string(),
             documentation: "测试文档".to_string(),
@@ -74,6 +94,6 @@ pub async fn list_document(query: Json<DocumentQueryByPath>) -> impl IntoApiResp
                     r#type: ModuleType::Constant, name: "测试模块".to_string(), summary: "测试模块总结".to_string()
                 },
             ],
-        }),
+        })),
     }
 }

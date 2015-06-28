@@ -57,7 +57,7 @@ export interface DocumentInfoOneOf {
     * @enum {string}
     */
 export enum DocumentInfoOneOfTypeEnum {
-    Module = 'Module'
+    Module = 'module'
 }
 
 

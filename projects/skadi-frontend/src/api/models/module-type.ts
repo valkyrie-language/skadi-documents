@@ -19,10 +19,10 @@
  * @enum {string}
  */
 export enum ModuleType {
-    Module = 'Module',
-    Class = 'Class',
-    Trait = 'Trait',
-    Constant = 'Constant'
+    Module = 'module',
+    Class = 'class',
+    Trait = 'trait',
+    Constant = 'constant'
 }
 
 
