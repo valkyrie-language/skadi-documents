@@ -40,64 +40,39 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue'
 import {useRoute} from 'vue-router'
+import {type DocumentInfo, type ModuleItem, ModuleType} from "@/api/models";
 
 const route = useRoute()
 const moduleName = ref(route.params.module as string)
 const version = ref(route.params.version as string)
-const description = ref('Collection types provided by the standard library.')
 
-const items = ref([
-  // 示例数据
-  {
-    type: 'Module',
-    name: 'hash_map',
-    summary: 'A hash map implemented with linear probing and Robin Hood bucket stealing.'
-  },
-  {
-    type: 'Module',
-    name: 'vec_deque',
-    summary: 'A double-ended queue implemented with a growable ring buffer.'
-  },
-  {
-    type: 'Class',
-    name: 'BTreeMap',
-    summary: 'A map based on a B-Tree.'
-  },
-  {
-    type: 'Class',
-    name: 'BTreeSet',
-    summary: 'A map based on a B-Tree.'
-  },
-  {
-    type: 'Trait',
-    name: 'FromIterator',
-    summary: 'Conversion from an Iterator.'
-  },
-  {
-    type: 'Constant',
-    name: 'π',
-    summary: 'Conversion from an Iterator.'
-  }
-])
-const TYPE_ORDER = ['Module', 'Class', 'Trait', 'Constant']
+const ITEM_ORDER: ModuleType[] = ['module', 'class', 'trait', 'constant']
+
+const props = defineProps<{
+  moduleInfo: DocumentInfo
+}>()
+
+const items = computed(() => {
+  return props.moduleInfo.items as ModuleItem[]
+})
 
 const groupedItems = computed(() => {
-  const groups = {}
-  items.value.forEach(item => {
-    if (!groups[item.type]) {
-      groups[item.type] = []
+  const groups: Record<ModuleType, ModuleItem[]> = {}
+  for (const type of ITEM_ORDER) {
+    for (const item of items.value) {
+      if (item.type === type) {
+        if (!groups[type]) {
+          groups[type] = []
+        }
+        groups[type].push(item)
+      }
     }
-    groups[item.type].push(item)
-  })
-  
-  // 按照定义的顺序对类型进行排序
-  return Object.fromEntries(
-    Object.entries(groups).sort(([a], [b]) => {
-      return TYPE_ORDER.indexOf(a) - TYPE_ORDER.indexOf(b)
-    })
-  )
+  }
+  return groups
 })
-// 在实际项目中，这里会调用 API 获取模块文档数据
+const description = computed(() => {
+  return props.moduleInfo.documentation
+})
 </script>
 
 <style lang="scss" scoped>

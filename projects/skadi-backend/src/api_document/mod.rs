@@ -11,10 +11,12 @@ pub struct DocumentQueryByPath {
     /// The owner of the package.
     organization: String,
     /// The name of the package.
-    name: String,
+    library: String,
     /// The specific version of the package to query.
+    #[serde(default)]
     version: Option<String>,
     /// The path of the document to query.
+    #[serde(default)]
     path: Vec<String>,
 }
 

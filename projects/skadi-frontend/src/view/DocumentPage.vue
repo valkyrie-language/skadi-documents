@@ -6,9 +6,9 @@
       <Suspense>
         <template #default>
           <div v-if="documentInfo">
-            <module-view v-if="documentType === 'module'" :moduleName="moduleName" :version="version"/>
-            <class-view v-else-if="documentType === 'class'" :className="className" :version="version"/>
-            <trait-view v-else-if="documentType === 'trait'" :traitName="traitName" :version="version"/>
+            <module-view v-if="documentType === 'module'" :moduleInfo="documentInfo" :version="version"/>
+            <class-view v-else-if="documentType === 'class'" :className="itemName" :version="version"/>
+            <trait-view v-else-if="documentType === 'trait'" :traitName="itemName" :version="version"/>
           </div>
           <div class="error" v-else-if="error">{{ error }}</div>
         </template>
@@ -21,64 +21,56 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from 'vue'
+import {computed, onMounted, ref} from 'vue'
 import {useRoute} from 'vue-router'
 import {useFluent} from 'fluent-vue'
 import TopNavigation from '@/components/TopNavigation.vue'
 import {ClassView, ModuleView, TraitView} from '@/components/document'
 import DocumentSidebar from '@/components/document/DocumentSidebar.vue'
 import {documentQueryByPath} from "@/api/api-document.ts";
+import type {DocumentInfo} from "@/api/models";
 
 const {$t} = useFluent()
 const route = useRoute()
 
 const organization = ref(route.params.organization as string)
-const library = ref(route.params.library as string)
+const library = ref(route.params.package as string)
 const version = ref(route.params.version as string)
-const modulePath = ref(route.params.modulePath as string)
+const modulePath = ref(route.params.module_path as string)
 
-const documentType = ref('module')
-const documentInfo = ref({
-  name: 'std::collections',
-  version: '1.0.0',
-  description: 'Collection types provided by the standard library.',
-  items: [
-    {
-      type: 'Module',
-      name: 'hash_map',
-      description: 'A hash map implemented with linear probing and Robin Hood bucket stealing.'
-    },
-    {
-      type: 'Module',
-      name: 'vec_deque',
-      description: 'A double-ended queue implemented with a growable ring buffer.'
-    },
-    {
-      type: 'Class',
-      name: 'BTreeMap',
-      description: 'A map based on a B-Tree.'
-    },
-    {
-      type: 'Trait',
-      name: 'FromIterator',
-      description: 'Conversion from an Iterator.'
-    }
-  ]
+const documentInfo = ref<DocumentInfo | null>(null)
+const documentType = computed(() => {
+  return documentInfo.value.type
 })
 const error = ref('')
 
-const moduleName = ref(modulePath.value)
-const className = ref('')
-const traitName = ref('')
+const itemName = ref('')
 
 const fetchDocumentInfo = async () => {
   try {
     error.value = ''
-    // 在实际项目中，这里会调用 API 获取文档信息
-    // 目前使用模拟数据
-    documentInfo.value = documentInfo.value
+    const response = await documentQueryByPath({
+      organization: organization.value,
+      library: library.value,
+      version: version.value,
+      module_path: modulePath.value
+    })
+    documentInfo.value = response
+
+    // 根据返回的文档类型设置相应的变量
+    if (response) {
+      documentType.value = response.type.toLowerCase()
+      if (documentType.value === 'module') {
+        itemName.value = modulePath.value
+      } else if (documentType.value === 'class') {
+        itemName.value = response.name
+      } else if (documentType.value === 'trait') {
+        itemName.value = response.name
+      }
+    }
   } catch (e) {
-    error.value = 'Failed to load documentation'
+    error.value = '加载文档失败'
+    console.error('Failed to load documentation:', e)
   }
 }
 
@@ -90,7 +82,6 @@ onMounted(() => {
 <style scoped lang="scss">
 .document-page {
   display: flex;
-  height: calc(100vh - 60px);
 
   .sidebar {
     flex-shrink: 0;
