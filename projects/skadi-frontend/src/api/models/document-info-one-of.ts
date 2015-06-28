@@ -12,46 +12,52 @@
  */
 
 
-import { ApiKeyLocation } from './api-key-location';
+import { ModuleItem } from './module-item';
 
 /**
  * 
  * @export
- * @interface SecuritySchemeOneOf
+ * @interface DocumentInfoOneOf
  */
-export interface SecuritySchemeOneOf {
+export interface DocumentInfoOneOf {
     /**
      * 
      * @type {string}
-     * @memberof SecuritySchemeOneOf
+     * @memberof DocumentInfoOneOf
      */
-    description?: string | null;
+    documentation: string;
     /**
      * 
-     * @type {ApiKeyLocation}
-     * @memberof SecuritySchemeOneOf
+     * @type {Array<ModuleItem>}
+     * @memberof DocumentInfoOneOf
      */
-    _in: ApiKeyLocation;
+    items: Array<ModuleItem>;
     /**
      * 
      * @type {string}
-     * @memberof SecuritySchemeOneOf
+     * @memberof DocumentInfoOneOf
      */
     name: string;
     /**
      * 
      * @type {string}
-     * @memberof SecuritySchemeOneOf
+     * @memberof DocumentInfoOneOf
      */
-    type: SecuritySchemeOneOfTypeEnum;
+    summary: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentInfoOneOf
+     */
+    type: DocumentInfoOneOfTypeEnum;
 }
 
 /**
     * @export
     * @enum {string}
     */
-export enum SecuritySchemeOneOfTypeEnum {
-    ApiKey = 'apiKey'
+export enum DocumentInfoOneOfTypeEnum {
+    Module = 'Module'
 }
 
 

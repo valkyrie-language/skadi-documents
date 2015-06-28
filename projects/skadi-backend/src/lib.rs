@@ -4,6 +4,7 @@
 #![doc(html_logo_url = "https://raw.githubusercontent.com/oovm/shape-rs/dev/projects/images/Trapezohedron.svg")]
 #![doc(html_favicon_url = "https://raw.githubusercontent.com/oovm/shape-rs/dev/projects/images/Trapezohedron.svg")]
 
+mod api_document;
 mod api_packages;
 mod api_statistics;
 mod configs;
@@ -35,6 +36,7 @@ impl SkadiService {
             .api_route("/home/statistics", get(api_statistics::home_statistics))
             .api_route("/package/find", post(api_packages::find_package))
             .api_route("/package/versions", post(api_packages::list_package_version))
+            .api_route("/document/query", post(api_document::list_document))
             .route("/api.json", get(open_api));
 
         let mut api =

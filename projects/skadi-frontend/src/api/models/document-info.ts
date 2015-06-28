@@ -12,20 +12,16 @@
  */
 
 
-import { OAuth2FlowsOneOf1Password } from './oauth2-flows-one-of1-password';
+import { DocumentInfoOneOf } from './document-info-one-of';
+import { DocumentInfoOneOf1 } from './document-info-one-of1';
+import { DocumentInfoOneOf2 } from './document-info-one-of2';
+import { ModuleItem } from './module-item';
 
 /**
- * 
+ * @type DocumentInfo
  * @export
- * @interface OAuth2FlowsOneOf1
  */
-export interface OAuth2FlowsOneOf1 {
-    /**
-     * 
-     * @type {OAuth2FlowsOneOf1Password}
-     * @memberof OAuth2FlowsOneOf1
-     */
-    password: OAuth2FlowsOneOf1Password;
-}
+export type DocumentInfo = DocumentInfoOneOf | DocumentInfoOneOf1 | DocumentInfoOneOf2;
+
 
 

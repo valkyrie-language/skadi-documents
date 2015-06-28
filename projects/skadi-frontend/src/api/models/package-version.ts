@@ -12,20 +12,31 @@
  */
 
 
-import { OAuth2FlowsOneOf1Password } from './oauth2-flows-one-of1-password';
 
 /**
  * 
  * @export
- * @interface OAuth2FlowsOneOf1
+ * @interface PackageVersion
  */
-export interface OAuth2FlowsOneOf1 {
+export interface PackageVersion {
     /**
      * 
-     * @type {OAuth2FlowsOneOf1Password}
-     * @memberof OAuth2FlowsOneOf1
+     * @type {string}
+     * @memberof PackageVersion
      */
-    password: OAuth2FlowsOneOf1Password;
+    update_time: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PackageVersion
+     */
+    update_user: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PackageVersion
+     */
+    version: string;
 }
 
 

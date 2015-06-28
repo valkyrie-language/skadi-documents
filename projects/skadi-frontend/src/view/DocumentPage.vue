@@ -1,7 +1,7 @@
 <template>
   <top-navigation/>
   <div class="document-page">
-    <document-sidebar class="sidebar" />
+    <document-sidebar class="sidebar"/>
     <div class="document-container">
       <Suspense>
         <template #default>
@@ -53,7 +53,7 @@ const documentInfo = ref({
       description: 'A double-ended queue implemented with a growable ring buffer.'
     },
     {
-      type: 'Struct',
+      type: 'Class',
       name: 'BTreeMap',
       description: 'A map based on a B-Tree.'
     },
@@ -90,11 +90,11 @@ onMounted(() => {
 .document-page {
   display: flex;
   height: calc(100vh - 60px);
-  
+
   .sidebar {
     flex-shrink: 0;
   }
-  
+
   .document-container {
     flex: 1;
     padding: 2rem;

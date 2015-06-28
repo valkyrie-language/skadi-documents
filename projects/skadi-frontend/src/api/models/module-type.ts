@@ -12,20 +12,18 @@
  */
 
 
-import { OAuth2FlowsOneOf1Password } from './oauth2-flows-one-of1-password';
 
 /**
  * 
  * @export
- * @interface OAuth2FlowsOneOf1
+ * @enum {string}
  */
-export interface OAuth2FlowsOneOf1 {
-    /**
-     * 
-     * @type {OAuth2FlowsOneOf1Password}
-     * @memberof OAuth2FlowsOneOf1
-     */
-    password: OAuth2FlowsOneOf1Password;
+export enum ModuleType {
+    Module = 'Module',
+    Class = 'Class',
+    Trait = 'Trait',
+    Constant = 'Constant'
 }
+
 
 

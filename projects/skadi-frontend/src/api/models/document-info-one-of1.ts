@@ -12,20 +12,34 @@
  */
 
 
-import { OAuth2FlowsOneOf1Password } from './oauth2-flows-one-of1-password';
 
 /**
  * 
  * @export
- * @interface OAuth2FlowsOneOf1
+ * @interface DocumentInfoOneOf1
  */
-export interface OAuth2FlowsOneOf1 {
+export interface DocumentInfoOneOf1 {
     /**
      * 
-     * @type {OAuth2FlowsOneOf1Password}
-     * @memberof OAuth2FlowsOneOf1
+     * @type {string}
+     * @memberof DocumentInfoOneOf1
      */
-    password: OAuth2FlowsOneOf1Password;
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentInfoOneOf1
+     */
+    type: DocumentInfoOneOf1TypeEnum;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum DocumentInfoOneOf1TypeEnum {
+    Class = 'Class'
+}
+
 
 

@@ -16,36 +16,33 @@
 /**
  * 
  * @export
- * @interface SecuritySchemeOneOf3
+ * @interface DocumentQueryByPath
  */
-export interface SecuritySchemeOneOf3 {
+export interface DocumentQueryByPath {
     /**
-     * 
+     * The name of the package.
      * @type {string}
-     * @memberof SecuritySchemeOneOf3
+     * @memberof DocumentQueryByPath
      */
-    description?: string | null;
+    name: string;
     /**
-     * 
+     * The owner of the package.
      * @type {string}
-     * @memberof SecuritySchemeOneOf3
+     * @memberof DocumentQueryByPath
      */
-    openIdConnectUrl: string;
+    organization: string;
     /**
-     * 
-     * @type {string}
-     * @memberof SecuritySchemeOneOf3
+     * The path of the document to query.
+     * @type {Array<string>}
+     * @memberof DocumentQueryByPath
      */
-    type: SecuritySchemeOneOf3TypeEnum;
+    path: Array<string>;
+    /**
+     * The specific version of the package to query.
+     * @type {string}
+     * @memberof DocumentQueryByPath
+     */
+    version?: string | null;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum SecuritySchemeOneOf3TypeEnum {
-    OpenIdConnect = 'openIdConnect'
-}
-
 
 
