@@ -9,9 +9,7 @@
     <div class="module-content">
       <div class="doc-section">
         <h2>Description</h2>
-        <div class="description" v-if="description">
-          {{ description }}
-        </div>
+        <div class="description markdown-content" v-if="description" v-html="renderedDescription"></div>
         <div class="no-description" v-else>
           No description available.
         </div>
@@ -38,11 +36,24 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import {computed, ref, onMounted} from 'vue'
 import {useRoute} from 'vue-router'
-import {type DocumentInfo, type ModuleItem, ModuleType} from "@/api/models";
+import {type DocumentInfo, type ModuleItem, ModuleType} from "@/api/models"
+import {useMarkdown} from '@/composables/useMarkdown'
 
 const route = useRoute()
+const renderedDescription = ref('')
+
+const renderDescription = async () => {
+  if (description.value) {
+    const {renderMarkdown} = await useMarkdown()
+    renderedDescription.value = await renderMarkdown(description.value)
+  }
+}
+
+onMounted(() => {
+  renderDescription()
+})
 const moduleName = ref(route.params.module as string)
 const version = ref(route.params.version as string)
 

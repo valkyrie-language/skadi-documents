@@ -17,7 +17,7 @@ pub struct DocumentQueryByPath {
     version: Option<String>,
     /// The path of the document to query.
     #[serde(default)]
-    path: Vec<String>,
+    module_path: Vec<String>,
 }
 
 #[derive(Serialize, JsonSchema)]
@@ -63,13 +63,13 @@ pub struct ModuleItem {
 }
 
 pub async fn list_document(query: Json<DocumentQueryByPath>) -> impl IntoApiResponse {
-    match query.0.path.last() {
+    match query.0.module_path.last() {
         Some(s) if s.eq("class") => Json(DocumentInfo::Class(ClassInfo { name: "测试类".to_string() })),
         Some(s) if s.eq("trait") => Json(DocumentInfo::Trait(TraitInfo { name: "测试特质".to_string() })),
         _ => Json(DocumentInfo::Module(ModuleInfo {
             name: "测试名".to_string(),
             summary: "测试总结".to_string(),
-            documentation: "测试文档".to_string(),
+            documentation: "测试文档 $2$ \n```ts\nclass Test {\n    constructor() {\n        console.log('Hello World');\n    }\n}\n```".to_string(),
             items: vec![
                 ModuleItem {
                     r#type: ModuleType::Module, name: "测试模块".to_string(), summary: "测试模块总结".to_string()

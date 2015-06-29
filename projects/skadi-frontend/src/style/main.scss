@@ -1,6 +1,5 @@
 @import './_variable.scss';
 
-// Reset and base styles
 * {
     margin: 0;
     padding: 0;
@@ -28,68 +27,8 @@ a {
 code, pre {
     font-family: $font-family-mono;
     background-color: $code-background;
-    border-radius: 3px;
 }
 
-pre {
-    padding: 1rem;
-    overflow-x: auto;
-}
-
-code {
-    padding: 0.2rem 0.4rem;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    margin-bottom: 1rem;
-    font-weight: 600;
-}
-
-p, ul, ol {
-    margin-bottom: 1rem;
-}
-
-// Container and layout
-.container {
-    max-width: $container-max-width;
-    margin: 0 auto;
-    padding: 0 $content-padding;
-}
-
-// Sidebar
-.sidebar {
-    background-color: $sidebar-background;
-    width: $sidebar-width;
-    height: 100vh;
-    padding: $content-padding;
-    border-right: 1px solid $border-color;
-    overflow-y: auto;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-// Main content
-.content {
-    margin-left: $sidebar-width;
-    padding: $content-padding;
-    padding-top: $header-height + $content-padding;
-}
-
-// Header
-.header {
-    height: $header-height;
-    background-color: $background-color;
-    border-bottom: 1px solid $border-color;
-    display: flex;
-    align-items: center;
-    padding: 0 $content-padding;
-    position: fixed;
-    top: 0;
-    left: $sidebar-width;
-    right: 0;
-    z-index: 100;
-}
 
 // Responsive adjustments
 @media (max-width: $breakpoint-large) {

@@ -20,7 +20,7 @@
         <package-dependents v-else-if="activeTab === 'dependents'" :packageInfo="packageInfo"/>
       </div>
 
-      <package-sidebar :package-info="packageInfo"/>
+      <package-sidebar :package-info="packageInfo" :installer="'legion'"/>
     </div>
   </div>
 </template>

@@ -6,10 +6,7 @@
 import {useFluent} from 'fluent-vue'
 import {onMounted, ref, watch} from 'vue'
 import type {PackageDetail} from '@/api/models'
-import MarkdownIt from 'markdown-it'
-import markdownItKatex from 'markdown-it-katex'
-import {createHighlighter} from 'shiki'
-import 'katex/dist/katex.min.css'
+import {useMarkdown} from '@/composables/useMarkdown'
 
 const props = defineProps<{
   packageInfo: PackageDetail
@@ -18,34 +15,9 @@ const props = defineProps<{
 const {$t} = useFluent()
 const renderedContent = ref('')
 
-const highlighter = await createHighlighter({
-  themes: ['github-light'],
-  langs: ['typescript'],
-})
-
-const initMarkdown = async () => {
-  const md = new MarkdownIt({
-    html: true,
-    highlight: (code: string, lang: string) => {
-      return highlighter.codeToHtml(code, {
-        theme: 'github-light',
-        lang: lang,
-      })
-    }
-  })
-
-
-  md.use(markdownItKatex, {
-    throwOnError: false,
-    errorColor: '#cc0000'
-  })
-
-  return md
-}
-
 const renderContent = async () => {
-  const md = await initMarkdown()
-  renderedContent.value = md.render(props.packageInfo.documentation || '')
+  const {renderMarkdown} = await useMarkdown()
+  renderedContent.value = await renderMarkdown(props.packageInfo.documentation || '')
 }
 
 onMounted(() => {

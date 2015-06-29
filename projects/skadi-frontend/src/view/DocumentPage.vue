@@ -1,5 +1,5 @@
 <template>
-  <top-navigation/>
+  <document-topbar/>
   <div class="document-page">
     <document-sidebar class="sidebar"/>
     <div class="document-container">
@@ -24,9 +24,7 @@
 import {computed, onMounted, ref} from 'vue'
 import {useRoute} from 'vue-router'
 import {useFluent} from 'fluent-vue'
-import TopNavigation from '@/components/TopNavigation.vue'
-import {ClassView, ModuleView, TraitView} from '@/components/document'
-import DocumentSidebar from '@/components/document/DocumentSidebar.vue'
+import {ClassView, DocumentSidebar, DocumentTopbar, ModuleView, TraitView} from '@/components/document'
 import {documentQueryByPath} from "@/api/api-document.ts";
 import type {DocumentInfo} from "@/api/models";
 
@@ -82,18 +80,34 @@ onMounted(() => {
 <style scoped lang="scss">
 .document-page {
   display: flex;
+  height: calc(100vh - 64px);
+  margin-top: 64px;
 
   .sidebar {
     flex-shrink: 0;
+    height: 100%;
+    overflow-y: auto;
+    border-right: 1px solid #e5e7eb;
   }
 
   .document-container {
     flex: 1;
-    padding: 2rem;
+    height: 100%;
     background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
   }
 
   .loading {
