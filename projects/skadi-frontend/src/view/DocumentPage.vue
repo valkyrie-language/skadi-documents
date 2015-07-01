@@ -6,9 +6,9 @@
       <Suspense>
         <template #default>
           <div v-if="documentInfo">
-            <module-view v-if="documentType === 'module'" :moduleInfo="documentInfo" :version="version"/>
-            <class-view v-else-if="documentType === 'class'" :className="itemName" :version="version"/>
-            <trait-view v-else-if="documentType === 'trait'" :traitName="itemName" :version="version"/>
+            <module-view v-if="documentType === 'module'" :module-info="documentInfo" :version="version"/>
+            <class-view v-else-if="documentType === 'class'" :class-info="documentInfo" :version="version"/>
+            <trait-view v-else-if="documentType === 'trait'" :trait-info="documentInfo" :version="version"/>
           </div>
           <div class="error" v-else-if="error">{{ error }}</div>
         </template>
@@ -26,7 +26,7 @@ import {useRoute} from 'vue-router'
 import {useFluent} from 'fluent-vue'
 import {ClassView, DocumentSidebar, DocumentTopbar, ModuleView, TraitView} from '@/components/document'
 import {documentQueryByPath} from "@/api/api-document.ts";
-import type {DocumentInfo} from "@/api/models";
+import {type DocumentInfo, ModuleType} from "@/api/models";
 
 const {$t} = useFluent()
 const route = useRoute()
@@ -38,11 +38,9 @@ const modulePath = ref(route.params.module_path as string)
 
 const documentInfo = ref<DocumentInfo | null>(null)
 const documentType = computed(() => {
-  return documentInfo.value.type
+  return documentInfo.value.type as ModuleType
 })
 const error = ref('')
-
-const itemName = ref('')
 
 const fetchDocumentInfo = async () => {
   try {
@@ -54,18 +52,6 @@ const fetchDocumentInfo = async () => {
       module_path: modulePath.value
     })
     documentInfo.value = response
-
-    // 根据返回的文档类型设置相应的变量
-    if (response) {
-      documentType.value = response.type.toLowerCase()
-      if (documentType.value === 'module') {
-        itemName.value = modulePath.value
-      } else if (documentType.value === 'class') {
-        itemName.value = response.name
-      } else if (documentType.value === 'trait') {
-        itemName.value = response.name
-      }
-    }
   } catch (e) {
     error.value = '加载文档失败'
     console.error('Failed to load documentation:', e)

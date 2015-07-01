@@ -24,19 +24,19 @@ export interface DocumentQueryByPath {
      * @type {string}
      * @memberof DocumentQueryByPath
      */
-    name: string;
+    library: string;
+    /**
+     * The path of the document to query.
+     * @type {string}
+     * @memberof DocumentQueryByPath
+     */
+    module_path?: string | null;
     /**
      * The owner of the package.
      * @type {string}
      * @memberof DocumentQueryByPath
      */
     organization: string;
-    /**
-     * The path of the document to query.
-     * @type {Array<string>}
-     * @memberof DocumentQueryByPath
-     */
-    path: Array<string>;
     /**
      * The specific version of the package to query.
      * @type {string}

@@ -17,48 +17,33 @@ import { ModuleItem } from './module-item';
 /**
  * 
  * @export
- * @interface DocumentInfoOneOf
+ * @interface ModuleInfo
  */
-export interface DocumentInfoOneOf {
+export interface ModuleInfo {
     /**
      * 
      * @type {string}
-     * @memberof DocumentInfoOneOf
+     * @memberof ModuleInfo
      */
     documentation: string;
     /**
      * 
      * @type {Array<ModuleItem>}
-     * @memberof DocumentInfoOneOf
+     * @memberof ModuleInfo
      */
     items: Array<ModuleItem>;
     /**
      * 
      * @type {string}
-     * @memberof DocumentInfoOneOf
+     * @memberof ModuleInfo
      */
     name: string;
     /**
      * 
      * @type {string}
-     * @memberof DocumentInfoOneOf
+     * @memberof ModuleInfo
      */
     summary: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DocumentInfoOneOf
-     */
-    type: DocumentInfoOneOfTypeEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DocumentInfoOneOfTypeEnum {
-    Module = 'module'
-}
-
 
 

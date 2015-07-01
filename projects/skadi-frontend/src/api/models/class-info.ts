@@ -16,30 +16,15 @@
 /**
  * 
  * @export
- * @interface DocumentInfoOneOf2
+ * @interface ClassInfo
  */
-export interface DocumentInfoOneOf2 {
+export interface ClassInfo {
     /**
      * 
      * @type {string}
-     * @memberof DocumentInfoOneOf2
+     * @memberof ClassInfo
      */
     name: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DocumentInfoOneOf2
-     */
-    type: DocumentInfoOneOf2TypeEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DocumentInfoOneOf2TypeEnum {
-    Trait = 'trait'
-}
-
 
 

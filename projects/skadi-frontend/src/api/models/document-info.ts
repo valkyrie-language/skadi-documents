@@ -12,16 +12,16 @@
  */
 
 
-import { DocumentInfoOneOf } from './document-info-one-of';
-import { DocumentInfoOneOf1 } from './document-info-one-of1';
-import { DocumentInfoOneOf2 } from './document-info-one-of2';
+import { ClassInfo } from './class-info';
+import { ModuleInfo } from './module-info';
 import { ModuleItem } from './module-item';
+import { TraitInfo } from './trait-info';
 
 /**
  * @type DocumentInfo
  * @export
  */
-export type DocumentInfo = DocumentInfoOneOf | DocumentInfoOneOf1 | DocumentInfoOneOf2;
+export type DocumentInfo = ClassInfo | ModuleInfo | TraitInfo;
 
 
 

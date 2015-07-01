@@ -38,7 +38,7 @@
 <script setup lang="ts">
 import {computed, ref, onMounted} from 'vue'
 import {useRoute} from 'vue-router'
-import {type DocumentInfo, type ModuleItem, ModuleType} from "@/api/models"
+import {type DocumentInfo, type ModuleInfo, type ModuleItem, ModuleType} from "@/api/models"
 import {useMarkdown} from '@/composables/useMarkdown'
 
 const route = useRoute()
@@ -60,11 +60,11 @@ const version = ref(route.params.version as string)
 const ITEM_ORDER: ModuleType[] = ['module', 'class', 'trait', 'constant']
 
 const props = defineProps<{
-  moduleInfo: DocumentInfo
+  moduleInfo: ModuleInfo
 }>()
 
 const items = computed(() => {
-  return props.moduleInfo.items as ModuleItem[]
+  return props.moduleInfo.items
 })
 
 const groupedItems = computed(() => {
