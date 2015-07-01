@@ -1,12 +1,15 @@
-use std::collections::BTreeMap;
 use crate::api_statistics::HomeStatistics;
 use aide::axum::IntoApiResponse;
 use axum::Json;
 use chrono::{DateTime, Local};
-use schemars::{JsonSchema, SchemaGenerator};
-use schemars::schema::{Schema, SchemaObject, SubschemaValidation};
+use schemars::{
+    schema::{Schema, SchemaObject, SubschemaValidation}, JsonSchema,
+    SchemaGenerator,
+};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
+use std::collections::BTreeMap;
+use indexmap::IndexMap;
 use uuid::Uuid;
 
 #[derive(Deserialize, JsonSchema)]
@@ -47,11 +50,7 @@ impl JsonSchema for DocumentInfo {
         });
 
         let subschemas = SubschemaValidation {
-            one_of: Some(vec![
-                g.subschema_for::<ModuleInfo>(),
-                g.subschema_for::<ClassInfo>(),
-                g.subschema_for::<TraitInfo>(),
-            ]),
+            one_of: Some(vec![g.subschema_for::<ModuleInfo>(), g.subschema_for::<ClassInfo>(), g.subschema_for::<TraitInfo>()]),
             ..Default::default()
         };
 
@@ -84,6 +83,32 @@ pub enum ModuleType {
 #[derive(Serialize, JsonSchema)]
 pub struct ClassInfo {
     pub name: String,
+    pub properties: IndexMap<String, ClassProperty>,
+    pub method_implementations: Vec<ClassImplementations>,
+    pub trait_implementations: Vec<ClassImplementations>,
+    pub blank_implementations: Vec<ClassImplementations>,
+}
+
+#[derive(Serialize, JsonSchema)]
+pub struct ClassProperty {
+    name: String,
+    documentation: String,
+    typed: String,
+}
+
+#[derive(Serialize, JsonSchema)]
+pub struct ClassMethod {
+    name: String,
+    argument: String,
+    return_type: String,
+    documentation: String,
+}
+
+#[derive(Serialize, JsonSchema)]
+pub struct ClassImplementations {
+    name: String,
+    properties: Vec<ClassProperty>,
+    methods: Vec<ClassMethod>,
 }
 
 #[derive(Serialize, JsonSchema)]
@@ -100,12 +125,14 @@ pub struct ModuleItem {
 
 pub async fn list_document(query: Json<DocumentQueryByPath>) -> impl IntoApiResponse {
     match query.0.module_path {
-        Some(s) if s.ends_with("class") => Json(DocumentInfo::Class(ClassInfo { name: "测试类".to_string() })),
+        Some(s) if s.ends_with("class") => Json(DocumentInfo::Class(ClassInfo { name: "测试类".to_string(), properties: Default::default(), method_implementations: vec![], trait_implementations: vec![], blank_implementations: vec![] })),
         Some(s) if s.ends_with("trait") => Json(DocumentInfo::Trait(TraitInfo { name: "测试特质".to_string() })),
         _ => Json(DocumentInfo::Module(ModuleInfo {
             name: "测试名".to_string(),
             summary: "测试总结".to_string(),
-            documentation: "测试文档 $2$ \n```ts\nclass Test {\n    constructor() {\n        console.log('Hello World');\n    }\n}\n```".to_string(),
+            documentation:
+                "测试文档 $2$ \n```ts\nclass Test {\n    constructor() {\n        console.log('Hello World');\n    }\n}\n```"
+                    .to_string(),
             items: vec![
                 ModuleItem {
                     r#type: ModuleType::Module, name: "测试模块".to_string(), summary: "测试模块总结".to_string()
